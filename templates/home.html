@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+        <title>Career Website</title>
+        <style>
+            #banner{
+                height: 360px;
+                width: 100%;
+                object-fit: cover;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="text-center mt-2 mb-4">Career Website</h1>
+            <img class="img-fluid" id="banner" src="/static/banner.jpg" alt="">
+            <h2 class="text-center mt-2 mb-4">About Us</h2>
+            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+            <h2 class="text-center mt-2 mb-4">Open Positions</h2>
+            <div>
+                {% for job in jobs %}
+                    {% include 'jobitem.html' %}
+                {% endfor %}
+            </div>
+            <div class="text-center">
+                <button class="btn btn-primary btn-lg">Contact Us</button>
+                <p class="mt-4">Copyright 2025, Careers</p>
+            </div>
+        </div>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script> -->
+    </body>
+</html>
