@@ -1,39 +1,27 @@
 from flask import Flask, render_template, jsonify
+from database import engine
+from sqlalchemy import text
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 
-JOBS = [
-    {
-        "id": 1,
-        "title": "Data Scientist",
-        "location": "Delhi, India",
-        "salary": "Rs 15,00,000",
-    },
-    {
-        "id": 2,
-        "title": "Data Analyst",
-        "location": "Bengaluru, India",
-        "salary": "Rs 10,00,000",
-    },
-    {
-        "id": 3,
-        "title": "Frontend Engineer",
-        "location": "Remote",
-    },
-    {
-        "id": 4,
-        "title": "Backend Engineer",
-        "location": "San Francisco, USA",
-        "salary": "$100,000",
-    },
-]
+load_dotenv()
+
+
+def load_jobs_from_db():
+    with engine.connect() as conn:
+        result = conn.execute(text("SELECT * from jobs"))
+        jobs = result.mappings().all()
+        return [dict(job) for job in jobs]
 
 
 @app.route("/")
 def hello_world():
-    return render_template("home.html", jobs=JOBS)
+    jobs = load_jobs_from_db()
+    return render_template("home.html", jobs=jobs)
 
 
 @app.route("/jobs")
 def list_jobs():
-    return jsonify(JOBS)
+    jobs = load_jobs_from_db()
+    return jsonify(jobs)
