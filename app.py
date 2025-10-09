@@ -15,10 +15,28 @@ def load_jobs_from_db():
         return [dict(job) for job in jobs]
 
 
+def load_job_from_db(id):
+    with engine.connect() as conn:
+        result = conn.execute(text("SELECT * FROM jobs WHERE id= :i"), {"i": id})
+        job = result.fetchone()
+        if job is None:
+            return None
+        else:
+            return dict(job._mapping)
+
+
 @app.route("/")
 def hello_world():
     jobs = load_jobs_from_db()
     return render_template("home.html", jobs=jobs)
+
+
+@app.route("/job/<id>")
+def get_job(id):
+    job = load_job_from_db(id)
+    if job is None:
+        return "Not Found", 404
+    return render_template("jobpage.html", job=job)
 
 
 @app.route("/jobs")
